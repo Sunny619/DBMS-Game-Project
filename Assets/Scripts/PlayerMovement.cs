@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rb;
 
     public LayerMask groundLayer;
-
+    public GameObject interactables;
     public float movespeed = 2f; 
 
     public float jumpforce;
@@ -34,11 +34,18 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(0,rb.velocity.y);
         else if(!moveleft1)
             rb.velocity = new Vector2(0,rb.velocity.y);    
+        if(Input.GetKey(KeyCode.Space))
+            singlejump();
         if(jump)
             {
                 rb.velocity = new Vector2(rb.velocity.x,jumpforce);
                 jump =false;
-            }  
+            }
+        if(Input.GetKey(KeyCode.RightControl))
+        {
+            Interactables.I.checkinteract();
+           //interactables.GetComponent<Interactables>.
+        }
         
     }
     public void moveright()

@@ -8,6 +8,16 @@ public class Interactables : MonoBehaviour
     public GameObject[] panel;
     public Collider2D[] interactable;
 
+    public static Interactables I;
+     void Awake()
+     {
+         if(I != null)
+             GameObject.Destroy(I);
+         else
+             I = this;
+         
+         DontDestroyOnLoad(this);
+     }
 
     public void checkinteract()
     {
