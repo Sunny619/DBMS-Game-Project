@@ -16,9 +16,10 @@ public class ShopManager : MonoBehaviour
 
 
     public TextMeshProUGUI prompt;
-    void Start()
+    void Awake()
     {
         coinsText.text = coins.ToString();
+        currentSkin =  PlayerPrefs.GetInt("current_skin",0);
         //TODO:Update coins from database
     }
 
@@ -33,6 +34,7 @@ public class ShopManager : MonoBehaviour
         {
             currentSkin = i;
             prompt.text = "Skin "+i+" Equipped";
+            PlayerPrefs.SetInt("current_skin",i);
         }
         else if(coins >= cost[i])
         {
@@ -41,6 +43,7 @@ public class ShopManager : MonoBehaviour
             skins[i]=1;
             prompt.text = "Skin "+i+"  Bought and Equipped";
             coinsText.text = coins.ToString();
+            PlayerPrefs.SetInt("current_skin",i);
         }
         else
         {

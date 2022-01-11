@@ -17,9 +17,18 @@ public class PlayerMovement : MonoBehaviour
     bool jump = false;
 
     public Vector2[] Checkpoints;
+
+    public SpriteRenderer playerskin;
+    public Sprite[] skins;
     // Start is called before the first frame update
+    void Awake()
+    {
+        playerskin = gameObject.GetComponent<SpriteRenderer>();
+        playerskin.sprite = skins[PlayerPrefs.GetInt("current_skin")];
+    }
     void Start()
     {
+        
         rb= gameObject.GetComponent<Rigidbody2D>();   
     }
 
