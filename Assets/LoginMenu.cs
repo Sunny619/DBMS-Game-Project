@@ -8,7 +8,8 @@ public class LoginMenu : MonoBehaviour
 {
     public TextMeshProUGUI usernameText;
     public GameObject loginSucessPanel;
-
+    public GameObject worngPassText;
+    SqliteDatabase DB;
     public TMP_InputField usernameInput;
     public TMP_InputField passwordInput;
     string username;
@@ -17,6 +18,7 @@ public class LoginMenu : MonoBehaviour
     void Awake()
     {
         PlayerPrefs.DeleteAll();
+        DB = new SqliteDatabase("GameDB.db");
     }
     public void Login()
     {
@@ -24,12 +26,27 @@ public class LoginMenu : MonoBehaviour
         //TODO:Check Password and store playerprefs change scene
         username = usernameInput.text;
         password = passwordInput.text;
+        DataTable a  = DB.ExecuteQuery("Select * from Player where username = \""+username+"\" and password = \""+password+"\"");
+        if(a.Rows.Count==0)
+        {
+            LoginFail();
+        }
+        else
+        {
+            LoginSuccess();
+        }
         Debug.Log(username + " " + password);
-        PlayerPrefs.SetString("username",username);
-        LoginSuccess();
+        
+        
+    }
+    void LoginFail()
+    {
+        worngPassText.SetActive(true);
     }
     void LoginSuccess()
     {
+        PlayerPrefs.SetString("username",username);
+        worngPassText.SetActive(false);
         loginSucessPanel.SetActive(true);
         usernameText.text+= PlayerPrefs.GetString("username","user");
         Invoke("GotoMainMenu",2f);
