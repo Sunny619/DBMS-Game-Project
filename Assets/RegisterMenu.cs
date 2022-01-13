@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 public class RegisterMenu : MonoBehaviour
 {
-    //public TextMeshProUGUI usernameText;
-    //public GameObject registerSucessPanel;
-    //public GameObject userExistsText;
+    public TextMeshProUGUI usernameText;
+    public GameObject registerSucessPanel;
+    public GameObject userExistsText;
     SqliteDatabase DB;
     public TMP_InputField usernameInput;
     public TMP_InputField passwordInput;
@@ -25,45 +26,61 @@ public class RegisterMenu : MonoBehaviour
     }
     public void Register()
     {
-        //TODO:Check is user exists
-        //TODO:Check Password and store playerprefs change scene
         username = usernameInput.text;
         password = passwordInput.text;
         gender = genderInput.isOn?"m":"f";
         DOB = DOBInput.text;
-        // DataTable a  = DB.ExecuteQuery("Select * from Player where username = \""+username+"\" and password = \""+password+"\"");
-        // if(a.Rows.Count==0)
-        // {
-        //     LoginFail();
-        // }
-        // else
-        // {
-        //     LoginSuccess();
-        // }
+        //TODO:Check constraints
+        if(UserExists())
+        {
+            RegistrationFail();
+        }
+        else
+        {
+            RegisterSuccess();
+        }
         Debug.Log(username + " " + password+ " "+ gender + " " + DOB );
         
         
     }
-    // void LoginFail()
-    // {
-    //     userExistsText.SetActive(true);
-    // }
-    // void LoginSuccess()
-    // {
-    //     PlayerPrefs.SetString("username",username);
-    //     userExistsText.SetActive(false);
-    //     registerSucessPanel.SetActive(true);
-    //     usernameText.text+= PlayerPrefs.GetString("username","user");
-    //     Invoke("GotoMainMenu",2f);
-    // }
-    // void GotoMainMenu()
-    // {
-    //     SceneManager.LoadScene("MainMenu");
-    // }
-    // void UserExists()
-    // {
-    //     //TODO:Check is user exists
-    // }
+    void RegistrationFail()
+    {
+        userExistsText.SetActive(true);
+    }
+    void RegisterSuccess()
+    {
+        string query = "Insert into Player VALUES (\""+username+"\",\""+password+"\",\""+ gender +"\",\""+ DOB + "\");";
+        Debug.Log(query);
+        try{
+            DB.ExecuteNonQuery(query);
+        }
+        catch(Exception e)
+        {
+            Debug.Log(e);
+        }
+        
+        PlayerPrefs.SetString("username",username);
+        userExistsText.SetActive(false);
+        registerSucessPanel.SetActive(true);
+        usernameText.text+= PlayerPrefs.GetString("username","user");
+        Invoke("GotoMainMenu",2f);
+    }
+    void GotoMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+    bool UserExists()
+    {
+        DataTable a  = DB.ExecuteQuery("Select * from Player where username = \""+username+"\";");
+        if(a.Rows.Count==0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
     // Update is called once per frame
     void Update()
     {

@@ -23,7 +23,7 @@ public class LoginMenu : MonoBehaviour
     {
         username = usernameInput.text;
         password = passwordInput.text;
-        DataTable a  = DB.ExecuteQuery("Select * from Player where username = \""+username+"\" and password = \""+password+"\"");
+        DataTable a  = DB.ExecuteQuery("Select * from Player where username = \""+username+"\" and password = \""+password+"\";");
         if(a.Rows.Count==0)
         {
             LoginFail();
