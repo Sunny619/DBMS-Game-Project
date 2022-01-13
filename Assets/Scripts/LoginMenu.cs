@@ -8,13 +8,12 @@ public class LoginMenu : MonoBehaviour
 {
     public TextMeshProUGUI usernameText;
     public GameObject loginSucessPanel;
-    public GameObject worngPassText;
+    public GameObject wrongPassText;
     SqliteDatabase DB;
     public TMP_InputField usernameInput;
     public TMP_InputField passwordInput;
     string username;
     string password;
-    // Start is called before the first frame update
     void Awake()
     {
         PlayerPrefs.DeleteAll();
@@ -22,8 +21,6 @@ public class LoginMenu : MonoBehaviour
     }
     public void Login()
     {
-        //TODO:Check is user exists
-        //TODO:Check Password and store playerprefs change scene
         username = usernameInput.text;
         password = passwordInput.text;
         DataTable a  = DB.ExecuteQuery("Select * from Player where username = \""+username+"\" and password = \""+password+"\"");
@@ -41,12 +38,12 @@ public class LoginMenu : MonoBehaviour
     }
     void LoginFail()
     {
-        worngPassText.SetActive(true);
+        wrongPassText.SetActive(true);
     }
     void LoginSuccess()
     {
         PlayerPrefs.SetString("username",username);
-        worngPassText.SetActive(false);
+        wrongPassText.SetActive(false);
         loginSucessPanel.SetActive(true);
         usernameText.text+= PlayerPrefs.GetString("username","user");
         Invoke("GotoMainMenu",2f);
@@ -54,10 +51,6 @@ public class LoginMenu : MonoBehaviour
     void GotoMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
-    }
-    void UserExists()
-    {
-        //TODO:Check is user exists
     }
     // Update is called once per frame
     void Update()
