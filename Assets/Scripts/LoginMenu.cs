@@ -28,7 +28,7 @@ public class LoginMenu : MonoBehaviour
             wrongPassText.text = "Use of \" character is restricted";
             return;
         }
-        DataTable a  = DB.ExecuteQuery("Select * from Player where username = \""+username+"\" and password = \""+password+"\";");
+        DataTable a  = DB.ExecuteQuery("Select * from player where username = \""+username+"\" and password = \""+password+"\";");
         if(a.Rows.Count==0)
         {
             LoginFail();

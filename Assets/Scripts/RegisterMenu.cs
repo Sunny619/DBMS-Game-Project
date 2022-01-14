@@ -53,7 +53,7 @@ public class RegisterMenu : MonoBehaviour
     }
     void RegisterSuccess()
     {
-        string query = "Insert into Player VALUES (\""+username+"\",\""+password+"\",\""+ gender +"\",\""+ DOB + "\");";
+        string query = "Insert into player VALUES (\""+username+"\",\""+password+"\",\""+ gender +"\",\""+ DOB + "\");";
         Debug.Log(query);
         try{
             DB.ExecuteNonQuery(query);
@@ -75,7 +75,7 @@ public class RegisterMenu : MonoBehaviour
     }
     bool UserExists()
     {
-        DataTable a  = DB.ExecuteQuery("Select * from Player where username = \""+username+"\";");
+        DataTable a  = DB.ExecuteQuery("Select * from player where username = \""+username+"\";");
         if(a.Rows.Count==0)
         {
             return false;
