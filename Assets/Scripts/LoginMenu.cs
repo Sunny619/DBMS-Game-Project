@@ -8,7 +8,7 @@ public class LoginMenu : MonoBehaviour
 {
     public TextMeshProUGUI usernameText;
     public GameObject loginSucessPanel;
-    public GameObject wrongPassText;
+    public TextMeshProUGUI wrongPassText;
     SqliteDatabase DB;
     public TMP_InputField usernameInput;
     public TMP_InputField passwordInput;
@@ -23,6 +23,11 @@ public class LoginMenu : MonoBehaviour
     {
         username = usernameInput.text;
         password = passwordInput.text;
+        if(username.Contains("\"")||password.Contains("\""))
+        {
+            wrongPassText.text = "Use of \" character is restricted";
+            return;
+        }
         DataTable a  = DB.ExecuteQuery("Select * from Player where username = \""+username+"\" and password = \""+password+"\";");
         if(a.Rows.Count==0)
         {
@@ -38,12 +43,12 @@ public class LoginMenu : MonoBehaviour
     }
     void LoginFail()
     {
-        wrongPassText.SetActive(true);
+        wrongPassText.text = "Username or password is wrong";
     }
     void LoginSuccess()
     {
         PlayerPrefs.SetString("username",username);
-        wrongPassText.SetActive(false);
+        wrongPassText.text="";
         loginSucessPanel.SetActive(true);
         usernameText.text+= PlayerPrefs.GetString("username","user");
         Invoke("GotoMainMenu",2f);

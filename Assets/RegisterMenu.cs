@@ -9,7 +9,7 @@ public class RegisterMenu : MonoBehaviour
 {
     public TextMeshProUGUI usernameText;
     public GameObject registerSucessPanel;
-    public GameObject userExistsText;
+    public TextMeshProUGUI userExistsText;
     SqliteDatabase DB;
     public TMP_InputField usernameInput;
     public TMP_InputField passwordInput;
@@ -30,7 +30,11 @@ public class RegisterMenu : MonoBehaviour
         password = passwordInput.text;
         gender = genderInput.isOn?"m":"f";
         DOB = DOBInput.text;
-        //TODO:Check constraints
+        if(username.Contains("\"")||password.Contains("\""))
+        {
+            userExistsText.text = "Use of \" character is restricted";
+            return;
+        }
         if(UserExists())
         {
             RegistrationFail();
@@ -45,7 +49,7 @@ public class RegisterMenu : MonoBehaviour
     }
     void RegistrationFail()
     {
-        userExistsText.SetActive(true);
+        userExistsText.text="Username already exists. Please choose a different username.";
     }
     void RegisterSuccess()
     {
@@ -60,7 +64,7 @@ public class RegisterMenu : MonoBehaviour
         }
         
         PlayerPrefs.SetString("username",username);
-        userExistsText.SetActive(false);
+        userExistsText.text="";
         registerSucessPanel.SetActive(true);
         usernameText.text+= PlayerPrefs.GetString("username","user");
         Invoke("GotoMainMenu",2f);
