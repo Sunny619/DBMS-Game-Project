@@ -101,5 +101,6 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerPrefs.SetInt("coins",PlayerPrefs.GetInt("coins",0)+50);
         coinsText.text = PlayerPrefs.GetInt("coins",0).ToString();
+        GameManager.instance.UpdateDBCoins(PlayerPrefs.GetInt("coins",0));
     }
 }

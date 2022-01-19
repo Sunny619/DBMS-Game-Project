@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    SqliteDatabase DB;
     public static GameManager instance;
     // Start is called before the first frame update
     void Awake()
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+        DB = new SqliteDatabase("GameDB.db");
         
     }
 
@@ -26,10 +28,21 @@ public class GameManager : MonoBehaviour
     }
     public void GotoMenu()
     {
+        Resume();
         SceneManager.LoadScene("MainMenu");
     }
     public void QuitGame()
     {
+        Resume();
         Application.Quit();
+    }
+    public void UpdateDBCoins(int coin)
+    {
+        string query = "Update table playerprefs set coins = " + coin +" where username = \""+PlayerPrefs.GetString("username","user")+"\"";
+        Debug.Log(query);
+    }
+    public void Test()
+    {
+        Debug.Log("test");
     }
 }

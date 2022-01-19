@@ -11,7 +11,7 @@ public class Background : MonoBehaviour
     void Start()
     {
         sr = gameObject.GetComponent<SpriteRenderer>();
-        currentBackground = PlayerPrefs.GetInt("current_background", 0)-6;
+        currentBackground = PlayerPrefs.GetInt("current_bg", 0)-6;
         sr.sprite = backgrounds[currentBackground];
         sr.size = new Vector2(300f,100f);
     }

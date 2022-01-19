@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class LoginMenu : MonoBehaviour
     public TMP_InputField passwordInput;
     string username;
     string password;
+    Converter C = new Converter();
     void Awake()
     {
         PlayerPrefs.DeleteAll();
@@ -51,15 +53,31 @@ public class LoginMenu : MonoBehaviour
         wrongPassText.text="";
         loginSucessPanel.SetActive(true);
         usernameText.text+= PlayerPrefs.GetString("username","user");
+        InitPrefs();
         Invoke("GotoMainMenu",2f);
     }
     void GotoMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
     }
-    // Update is called once per frame
-    void Update()
+    void InitPrefs()
     {
-        
+        string current_skin ="", current_bg="", coins="",progress="", volume="";
+        DataTable dt= DB.ExecuteQuery(C.SelectTable("playerprefs",PlayerPrefs.GetString("username","user")));
+        foreach(DataRow row in dt.Rows)
+        {
+            current_skin += row["current_skin"].ToString();
+            current_bg += row["current_bg"].ToString();
+            coins += row["coins"].ToString();
+            progress += row["progress"].ToString();
+            volume += row["volume"].ToString();
+        }
+        Debug.Log(current_skin+current_bg+coins+progress+volume);
+        PlayerPrefs.SetInt("current_skin",Int32.Parse(current_skin));
+        PlayerPrefs.SetInt("current_bg",Int32.Parse(current_bg));
+        PlayerPrefs.SetInt("coins",Int32.Parse(coins));
+        PlayerPrefs.SetInt("progress",Int32.Parse(progress));
+        PlayerPrefs.SetInt("volume",Int32.Parse(volume));
     }
+
 }

@@ -19,6 +19,8 @@ public class RegisterMenu : MonoBehaviour
     string password;
     string gender;
     string DOB;
+
+    Converter C = new Converter();
     void Awake()
     {
         PlayerPrefs.DeleteAll();
@@ -67,7 +69,8 @@ public class RegisterMenu : MonoBehaviour
         userExistsText.text="";
         registerSucessPanel.SetActive(true);
         usernameText.text+= PlayerPrefs.GetString("username","user");
-        Invoke("GotoMainMenu",2f);
+        InitDB();
+        Invoke("GotoMainMenu",1.5f);
     }
     void GotoMainMenu()
     {
@@ -84,6 +87,18 @@ public class RegisterMenu : MonoBehaviour
         {
             return true;
         }
+    }
+    void InitDB()
+    {
+        string query = C.InsertTable("playerprefs",new string[]{PlayerPrefs.GetString("username","user"),"0","4000","0","100","6"});
+        Debug.Log(query);
+        DB.ExecuteNonQuery(query);
+        query = C.InsertTable("owns",new string[]{PlayerPrefs.GetString("username","user"),"0"});
+        Debug.Log(query);
+        DB.ExecuteNonQuery(query);
+        query = C.InsertTable("owns",new string[]{PlayerPrefs.GetString("username","user"),"6"});
+        Debug.Log(query);
+        DB.ExecuteNonQuery(query);
     }
     // Update is called once per frame
     void Update()

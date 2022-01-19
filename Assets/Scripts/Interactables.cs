@@ -11,12 +11,13 @@ public class Interactables : MonoBehaviour
     public static Interactables I;
      void Awake()
      {
-         if(I != null)
-             GameObject.Destroy(I);
-         else
+        //  if(I != null)
+        //      GameObject.Destroy(I);
+        //  else
+        if(I==null)
              I = this;
          
-         DontDestroyOnLoad(this);
+         //DontDestroyOnLoad(this);
      }
 
     public void checkinteract()
