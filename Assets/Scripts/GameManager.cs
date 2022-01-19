@@ -38,11 +38,8 @@ public class GameManager : MonoBehaviour
     }
     public void UpdateDBCoins(int coin)
     {
-        string query = "Update table playerprefs set coins = " + coin +" where username = \""+PlayerPrefs.GetString("username","user")+"\"";
+        string query = "Update playerprefs set coins = " + coin +" where username = \""+PlayerPrefs.GetString("username","user")+"\"";
         Debug.Log(query);
-    }
-    public void Test()
-    {
-        Debug.Log("test");
+        DB.ExecuteNonQuery(query);
     }
 }
