@@ -15,6 +15,8 @@ public class BuyCoinsPanel : MonoBehaviour
     int[] coins = { 100, 500, 1000, 2000, 5000 };
     List<string> cards = new List<string>();
     int flag = 0;
+
+    public TextMeshProUGUI alert;
     void Awake()
     {
         DB = new SqliteDatabase("GameDB.db");
@@ -47,6 +49,9 @@ public class BuyCoinsPanel : MonoBehaviour
             Debug.Log(query);
             DB.ExecuteNonQuery(query);
             CreateOrdersEntry(i);
+        }
+        else{
+            alert.text = "U need to add a valid payment method first";
         }
 
     }

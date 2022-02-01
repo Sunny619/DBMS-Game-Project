@@ -26,9 +26,9 @@ public class Converter
         query+=";";
         return query;
     }
-    public string SUpdateTable(string tablename, string newvaltag, string newval, string oldval)
+    public string SUpdateTable(string tablename, string newvaltag, string newval, string username)
     {
-        string query = "update " + tablename + " set " + newvaltag +" = "+"\""+ newval+"\"" + " where username  = " +"\"" + oldval+"\"";   
+        string query = "update " + tablename + " set " + newvaltag +" = "+"\""+ newval+"\"" + " where username  = " +"\"" + username+"\"";   
         query+=";";
         return query;
     }

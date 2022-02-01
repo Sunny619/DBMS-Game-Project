@@ -90,7 +90,7 @@ public class RegisterMenu : MonoBehaviour
     }
     void InitDB()
     {
-        string query = C.InsertTable("playerprefs",new string[]{PlayerPrefs.GetString("username","user"),"0","4000","0","100","6"});
+        string query = C.InsertTable("playerprefs",new string[]{PlayerPrefs.GetString("username","user"),"0","4000","0","0","6"});
         Debug.Log(query);
         DB.ExecuteNonQuery(query);
         query = C.InsertTable("owns",new string[]{PlayerPrefs.GetString("username","user"),"0"});

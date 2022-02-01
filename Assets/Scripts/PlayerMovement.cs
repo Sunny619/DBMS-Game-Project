@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
             singlejump();
         if(jump)
             {
+                gameObject.GetComponent<AudioSource>().Play();
                 rb.velocity = new Vector2(rb.velocity.x,jumpforce);
                 jump =false;
             }
