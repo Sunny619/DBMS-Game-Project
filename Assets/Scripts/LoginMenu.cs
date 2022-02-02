@@ -62,21 +62,21 @@ public class LoginMenu : MonoBehaviour
     }
     void InitPrefs()
     {
-        string current_skin ="", current_bg="", coins="",progress="", volume="";
+        string current_skin ="", current_bg="", coins="",highscore="", volume="";
         DataTable dt= DB.ExecuteQuery(C.SelectTable("playerprefs",PlayerPrefs.GetString("username","user")));
         foreach(DataRow row in dt.Rows)
         {
             current_skin += row["current_skin"].ToString();
             current_bg += row["current_bg"].ToString();
             coins += row["coins"].ToString();
-            progress += row["progress"].ToString();
+            highscore += row["highscore"].ToString();
             volume += row["volume"].ToString();
         }
-        Debug.Log(current_skin+current_bg+coins+progress+volume);
+        Debug.Log(current_skin+current_bg+coins+highscore+volume);
         PlayerPrefs.SetInt("current_skin",Int32.Parse(current_skin));
         PlayerPrefs.SetInt("current_bg",Int32.Parse(current_bg));
         PlayerPrefs.SetInt("coins",Int32.Parse(coins));
-        PlayerPrefs.SetInt("progress",Int32.Parse(progress));
+        PlayerPrefs.SetInt("highscore",Int32.Parse(highscore));
         PlayerPrefs.SetInt("volume",Int32.Parse(volume));
     }
 

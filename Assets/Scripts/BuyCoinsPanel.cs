@@ -23,7 +23,10 @@ public class BuyCoinsPanel : MonoBehaviour
         C = new Converter();
         FetchSavedCards();
     }
-
+    void Start()
+    {
+        FetchSavedCards();
+    }
     public void FetchSavedCards()
     {
         string query = C.SelectTable("payment", PlayerPrefs.GetString("username"));
