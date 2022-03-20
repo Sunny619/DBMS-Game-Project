@@ -15,12 +15,10 @@ public class Orders : MonoBehaviour
         C = new Converter();
         FetchOrders();
     }
-    void Start()
+    //TODO:UPADTE ORDERS ON ORDER FETCH
+    public void FetchOrders()
     {
-        FetchOrders();
-    }
-    void FetchOrders()
-    {
+        Debug.Log("Orders Updated");
         int childs = content.transform.childCount;
         for (int i = childs - 1; i >= 0; i--)
         {

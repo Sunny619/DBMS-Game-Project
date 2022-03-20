@@ -63,14 +63,7 @@ public class BuyCoinsPanel : MonoBehaviour
         int ord_id = 0;
         string query = "select max(ord_id) from orders";
         DataTable res = DB.ExecuteQuery(query);
-        // foreach (DataRow row in res.Rows)
-        // {
-        //     foreach(var item in row.Values)
-        //     {
-        //         Debug.Log(item);
-        //     }
-        // }
-        // Debug.Log(res.Rows[0].Values.ToString());
+
         if (res.Rows[0]["max(ord_id)"] != null)
         {
             ord_id = Int32.Parse(res.Rows[0]["max(ord_id)"].ToString())+1;
